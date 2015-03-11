@@ -1,0 +1,19 @@
+{
+    "name": "nikv/WP-eCommerce-toolbar",
+    "description": "A WPeCommerce Toolbar plugin",
+    "type": "wordpress-plugin",
+    "license": "GPL2",
+    "authors": [
+        {
+            "author" : "Nikhil Vimal",
+            "homepage": "nik.techvoltz.com"
+        }
+    ],
+    "require": {
+        "php" : ">=5.2.4"
+    },
+    "support" : {
+        "issues": "https://github.com/NikV/WP-eCommerce-toolbar/issues",
+        "source": "https://github.com/NikV/WP-eCommerce-toolbar"
+    }
+}
