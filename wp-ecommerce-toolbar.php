@@ -1,19 +1,21 @@
 <?php
 /**
  * Plugin Name: WP eCommerce Toolbar
- * Description: A simple toolbar extension for users of The WPeCommerce plugin
+ * Plugin URI: https://wordpress.org/plugins/wp-ecommerce-toolbar/
+ * Description: A simple toolbar extension for users of The WP eCommerce plugin
  * Author: Nikhil Vimal
  * Author URI: http://nik.techvoltz.com
  * Version: 1.0
- * Plugin URI:
  * License: GNU GPLv2+
  */
 
 class WPecommerce_Admin_Bar {
 
-
+	/**
+	 * Build the admin bar menu
+	 */
 	public function __construct() {
-		add_action('admin_bar_menu', array( $this, 'admin_bar_nodes'),  999);
+		add_action( 'admin_bar_menu', array( $this, 'admin_bar_nodes' ), 999 );
 
 	}
 
@@ -33,7 +35,7 @@ class WPecommerce_Admin_Bar {
 	 */
 	public function admin_bar_nodes( $wp_admin_bar ) {
 		//only displayed on site, not in admin
-		if ( ! is_admin()) {
+		if ( ! is_admin() ) {
 
 			// Main Parent Node
 			$wp_admin_bar->add_node( array(
@@ -45,7 +47,7 @@ class WPecommerce_Admin_Bar {
 			$wp_admin_bar->add_node( array(
 					'parent' => 'wp-logo',
 					'id'    => 'wp_ecommerce_toolbar_about',
-					'title' => 'About WP eCommerce',
+					'title' => __( 'About WP eCommerce' ),
 					'href'  => 'https://wpecommerce.org/',
 				)
 			);
@@ -53,7 +55,7 @@ class WPecommerce_Admin_Bar {
 			$wp_admin_bar->add_node( array(
 					'parent' => 'wp_ecommerce_toolbar',
 					'id'    => 'wp_ecommerce_toolbar_products',
-					'title' => 'Products',
+					'title' => get_post_type_object( 'wpsc-product' )->labels->name,
 					'href' => admin_url('edit.php?post_type=wpsc-product'),
 				)
 			);
@@ -61,7 +63,7 @@ class WPecommerce_Admin_Bar {
 			$wp_admin_bar->add_node( array(
 					'parent' => 'wp_ecommerce_toolbar_products',
 					'id'    => 'wp_ecommerce_toolbar_products_new',
-					'title' => 'Add New',
+					'title' => get_post_type_object( 'wpsc-product' )->labels->add_new_item,
 					'href' => admin_url('post-new.php?post_type=wpsc-product'),
 				)
 			);
@@ -69,7 +71,7 @@ class WPecommerce_Admin_Bar {
 			$wp_admin_bar->add_node( array(
 					'parent' => 'wp_ecommerce_toolbar',
 					'id'    => 'wp_ecommerce_toolbar_coupons',
-					'title' => 'Coupons',
+					'title' => __( 'Coupons' ),
 					'href' => admin_url('edit.php?post_type=wpsc-product&page=wpsc-edit-coupons'),
 				)
 			);
@@ -77,7 +79,7 @@ class WPecommerce_Admin_Bar {
 			$wp_admin_bar->add_node( array(
 					'parent' => 'wp_ecommerce_toolbar_coupons',
 					'id'    => 'wp_ecommerce_toolbar_coupons_new',
-					'title' => 'Add New',
+					'title' => __( 'Add New' ),
 					'href' => admin_url('edit.php?post_type=wpsc-product&page=wpsc-edit-coupons&wpsc-action=add_coupon'),
 				)
 			);
@@ -85,7 +87,7 @@ class WPecommerce_Admin_Bar {
 			$wp_admin_bar->add_node( array(
 					'parent' => 'wp_ecommerce_toolbar',
 					'id'    => 'wp_ecommerce_toolbar_variations',
-					'title' => 'Variations',
+					'title' => get_taxonomy( 'wpsc-variation' )->labels->name,
 					'href' => admin_url('edit-tags.php?taxonomy=wpsc-variation&post_type=wpsc-product'),
 				)
 			);
@@ -93,7 +95,7 @@ class WPecommerce_Admin_Bar {
 			$wp_admin_bar->add_node( array(
 					'parent' => 'wp_ecommerce_toolbar',
 					'id'    => 'wp_ecommerce_toolbar_settings',
-					'title' => 'Settings',
+					'title' => __( 'Settings' ),
 					'href' => admin_url('options-general.php?page=wpsc-settings&tab=general'),
 				)
 			);
@@ -105,17 +107,4 @@ class WPecommerce_Admin_Bar {
 
 }
 
-function load_wpecommerce_admin_bar() {
-	if( !function_exists( 'is_plugin_active' ) ) {
-		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-	}
-
-	//Check if plugin is activated, or else...
-	if( is_plugin_active( 'wp-e-commerce/wp-shopping-cart.php' ) ) {
-
-		return WPecommerce_Admin_Bar::init();
-
-	}
-
-}
-add_action('plugins_loaded', 'load_wpecommerce_admin_bar');
+add_action( 'wpsc_init', 'WPecommerce_Admin_Bar::init' );

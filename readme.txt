@@ -3,7 +3,7 @@ Contributors: NikV
 Tags: wpecommerce, toolbar
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 1.0
+Stable tag: 1.1
 License: GNU GPLv2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,3 +23,7 @@ Have an issue? You can either report it in the support forums or on <a href="htt
 4. Activate this plugin
 
 OR you can just install it with WordPress by going to Plugins >> Add New >> and type this plugin\'s name
+
+== Changelog ==
+= 1.1 =
+Updates in the code, mostly a better way to setup the menu, check if WPeC exists, etc.
